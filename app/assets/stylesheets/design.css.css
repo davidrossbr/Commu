@@ -78,4 +78,4 @@
 
 .mutted { opacity: 0.4; cursor: default; }
 
-textarea { width: 97%; height: 120px; margin-top: 10px; }
+textarea { width: 97%; resize: vertical; height: 20px; margin-top: 10px; max-height: 100px !important; }

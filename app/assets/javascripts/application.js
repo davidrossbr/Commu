@@ -16,6 +16,8 @@
 
 $(document).ready(function(){
 	$('.topic_description').height($(window).height());	
-
-
 });
+
+$(document).ready(function(){
+	$('textarea').autosize();
+})

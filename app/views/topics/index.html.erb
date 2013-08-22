@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>Tópicos</h1>
+</div>
+
+<%= link_to "Novo tópico", "#new_topic_modal", class: "btn btn-default", "data-toggle" => "modal" %>
+
+<div id="new_topic_modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>Um corpo fino …</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+  </div>
+</div>
+
+
+<% @topics.each do |topic| %>
+  <div class="topic clearfix">
+        <p><%= User.find(topic.user_id).full_name %></p>
+        <p><%= topic.title %></p>
+        <p><%= topic.content %></p>
+        <div>
+          <%= link_to 'Show', topic %> |
+          <%= link_to 'Edit', edit_topic_path(topic) %> |
+          <%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+  </div>
+<% end %>

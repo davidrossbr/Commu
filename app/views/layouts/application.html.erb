@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Commu</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a href="#" class="nav pull-left brand">COMMÜ</a>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#">Link1</a></li>
+					<li><a href="#">Link2</a></li>
+					<li><a href="#">Link3</a></li>
+				</ul>
+				<ul class="nav pull-right">
+					<% if user_signed_in? %>
+						<li><%= link_to current_user.full_name, edit_user_registration_path %></li>
+						<li><%= link_to "Log Out", logout_path %></li>
+					<% else %>
+						<li><%= link_to "Registrar", register_path %></li>
+						<li><%= link_to "Login", login_path %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+
+		<%= yield %>
+	</div>
+</div>
+</body>
+</html>

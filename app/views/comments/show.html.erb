@@ -1,0 +1,27 @@
+<p>
+  <b>Topic:</b>
+  <%= @comment.topic_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= User.find(@comment.user_id).full_name %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @comment.content %>
+</p>
+
+<% Answer.where(comment_id: @comment).each do |answer| %>
+    <%= answer.comment_id %>
+    <%= User.find(answer.user_id).full_name %>
+    <%= answer.content %>
+    <%= link_to 'Show', answer %>
+    <%= link_to 'Edit', edit_answer_path(answer) %>
+    <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>
+

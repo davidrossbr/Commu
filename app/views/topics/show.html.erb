@@ -1,0 +1,165 @@
+<div class="row">
+  <div class="span4">
+    <div class="topic_description">
+      <p class="hidden">User:</p>
+      <p class="user_name"><%= User.find(@topic.user_id).full_name %></p>
+      
+      <p class="hidden">Title:</p>
+      <h4><%= @topic.title %></h4>
+      
+      <p class="hidden">Content:</p>
+      <p><%= @topic.content %></p>
+   </div>
+  </div>
+
+
+
+
+
+
+  <div class="span8">
+        <% flash.each do |type, message| %>
+      <div class="alert <%= flash_class type %>">
+        <button class="close" data-dismiss="alert">x</button>
+        <%= message %>
+      </div>
+    <% end %>
+
+
+    <% if user_signed_in? %>
+      <div>
+        <% @comment = Comment.new %>
+        <%= render "form_comment" %>
+      </div>
+    <% end %>
+
+
+
+    <% comentarios = Comment.where(topic_id: @topic) %>
+    <div class="comment">
+      <% comentarios.each do |comment| %>
+        <div class="comment_description">
+          <div class="admin pull-right">
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_comment_path(comment) %>
+            <%= link_to '<i class="icon-remove"></i>'.html_safe, comment, method: :delete, data: { confirm: 'Are you sure?' } %> 
+          </div>
+          <p class="hidden"><%= comment.topic_id %></p>
+          <p class="user_name"><%= User.find(comment.user_id).full_name %></p>
+          <p><%= comment.content %></p>
+        </div>
+
+
+
+
+
+
+
+
+        <% respostas = Answer.where(comment_id: comment) %>
+        <% if respostas.size > 0 %>
+          <button type="button" class="barra_resposta" data-toggle="collapse" data-target="#<%= comment.id %>">
+            <%= respostas.size %> 
+            <% if respostas.size == 1 %>
+              resposta
+            <% else %>
+              respostas
+            <% end %>
+            <i class="icon-comment"> </i>
+          </button>
+        <% else %>
+          <button type="button" class="barra_resposta mutted" data-toggle="collapse" data-target="#<%= comment.id %>">
+            <%= respostas.size %> respostas
+            <i class="icon-comment"> </i>
+          </button>
+        <% end %>
+
+
+
+
+
+
+
+
+
+
+        <% if user_signed_in? %>
+          <div class="collapse" id="<%= comment.id %>">
+            <div>
+              <% @comment = comment %>
+              <% @answer = Answer.new %>
+              <%= render "form_answer" %>
+            </div>
+            <div id="<%= comment.id %>a" class="answer">
+              <% if respostas.size != 0 %>
+                <% Answer.where(comment_id: comment).each do |answer| %>
+                  <div class="answer_description">
+                    <p class="hidden"><%= answer.comment_id %></p>
+                    <p class="user_name"><%= User.find(answer.user_id).full_name %></p>
+                    <p><%= answer.content %></p>
+                    <div>
+                      <p>
+                        <%= link_to 'Show', answer %> |
+                        <%= link_to 'Edit', edit_answer_path(answer) %> |
+                        <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        <% else %>
+          <div class="collapse" id="<%= comment.id %>">
+            <div>
+              <%#= render : "new_answer" %>
+            </div>
+            <div class="answer">
+              <% if Answer.where(comment_id: comment).size != 0 %>
+                <% Answer.where(comment_id: comment).each do |answer| %>
+                  <div class="answer_description">
+                    <p class="hidden"><%= answer.comment_id %></p>
+                    <p class="user_name"><%= User.find(answer.user_id).full_name %></p>
+                    <p><%= answer.content %></p>
+                    <div>
+                      <p>
+                        <%= link_to 'Show', answer %> |
+                        <%= link_to 'Edit', edit_answer_path(answer) %> |
+                        <%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %>
+                      </p>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+        <% end %>
+      <% end %>
+
+      <%# if user_signed_in? %>
+
+
+
+
+    </div>
+  </div>
+</div>

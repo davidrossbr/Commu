@@ -1,0 +1,15 @@
+<%= simple_form_for(@answer, html: {class: "form-inline"}) do |f| %>
+  <%= f.error_notification %>
+
+  <%# if user_signed_in? %>
+	<div>
+	<%= f.input :comment_id, input_html: {value: @comment.id}, as: :hidden %>
+	<%= f.input :user_id, input_html: {value: current_user.id}, as: :hidden %>
+	<%= f.input :content, label: false %>
+	</div>
+
+	<div>
+	<%= f.button :submit, 'Responder', class: "btn-small btn-info" %>
+	</div>
+  <%# end %>
+<% end %>
